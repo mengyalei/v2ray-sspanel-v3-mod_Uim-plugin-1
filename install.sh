@@ -167,8 +167,8 @@ pre_install_docker_compose(){
 
 
     echo "Which docker image address will be used"
-    read -p "(image address (Default mengyalei/v2ray_v3:go_pay):" docker_addresss
-    [ -z "${docker_addresss}" ] && docker_addresss="mengyalei/v2ray_v3:go_pay"
+    read -p "(image address (Default mengyalei/nolicv2ray_v3:1.0):" docker_addresss
+    [ -z "${docker_addresss}" ] && docker_addresss="mengyalei/nolicv2ray_v3:1.0"
     echo
     echo "---------------------------"
     echo "docker_addresss = ${docker_addresss}"
@@ -277,8 +277,8 @@ pre_install_docker_compose(){
     fi
     # Set sspanel speedtest function
     echo "use sspanel speedtest"
-    read -p "(sspanel speedtest: Default (6) hours every time):" sspanel_speedtest
-    [ -z "${sspanel_speedtest}" ] && sspanel_speedtest=6
+    read -p "(sspanel speedtest: Default (0) hours every time):" sspanel_speedtest
+    [ -z "${sspanel_speedtest}" ] && sspanel_speedtest=0
     echo
     echo "---------------------------"
     echo "sspanel_speedtest = ${sspanel_speedtest}"
