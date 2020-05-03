@@ -324,8 +324,8 @@ pre_install_caddy(){
 
     # Set caddy v2ray path
     echo "caddy v2ray path"
-    read -p "(Default path: /v2ray):" v2ray_path
-    [ -z "${v2ray_path}" ] && v2ray_path="/v2ray"
+    read -p "(Default path: /hls/cctv5phd.m3u8):" v2ray_path
+    [ -z "${v2ray_path}" ] && v2ray_path="/hls/cctv5phd.m3u8"
     echo
     echo "---------------------------"
     echo "v2ray_path = ${v2ray_path}"
@@ -381,6 +381,8 @@ services:
     image: ${docker_addresss}
     restart: always
     network_mode: "host"
+    extra_hosts:
+         auth.rico93.com: 127.0.0.1
     environment:
       sspanel_url: "${sspanel_url}"
       key: "${sspanel_key}"
@@ -446,6 +448,8 @@ services:
     image: ${docker_addresss}
     restart: always
     network_mode: "host"
+    extra_hosts:
+      auth.rico93.com: 127.0.0.1
     environment:
       sspanel_url: "${sspanel_url}"
       key: "${sspanel_key}"
@@ -531,6 +535,8 @@ services:
     image: ${docker_addresss}
     restart: always
     network_mode: "host"
+    extra_hosts:
+      auth.rico93.com: 127.0.0.1
     environment:
       sspanel_url: "${sspanel_url}"
       key: "${sspanel_key}"
