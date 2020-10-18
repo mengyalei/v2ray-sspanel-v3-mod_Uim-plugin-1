@@ -325,7 +325,7 @@ docker pull rico93/v2ray_v3:api_ubuntu
 
 // 执行
 
-docker run -d --network=host --name v2ray_v3_api -e node_id=1 -e key=ixidnf -e sspanel_url=https://xx -e docker=true --log-opt max-size=50m --log-opt max-file=3 --restart=always rico93/v2ray_v3:api_alpine
+docker run -d --network=host --name v2ray_v3_api -e node_id=1 -e key=ixidnf -e sspanel_url=https://xx  -e api_port=2333 -e speedtest=0 -e docker=true --log-opt max-size=50m --log-opt max-file=3 --restart=always rico93/v2ray_v3:api_alpine
 ~~~
 
 
