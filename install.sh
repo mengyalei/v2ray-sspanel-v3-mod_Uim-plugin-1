@@ -423,21 +423,14 @@ config_caddy_docker(){
     install_dependencies
     cat>Caddyfile<<EOF
 {\$V2RAY_DOMAIN}:{\$V2RAY_OUTSIDE_PORT}
-{
-  root /srv/www
-  log ./caddy.log
-  proxy {\$V2RAY_PATH} 127.0.0.1:{\$V2RAY_PORT} {
-    websocket
-    header_upstream -Origin
-  }
-  gzip
-  tls {\$V2RAY_EMAIL} {
-    protocols tls1.2 tls1.3
-    # remove comment if u want to use cloudflare (for DNS challenge authentication)
-    # dns cloudflare
-  }
-  realip cloudflare
-}
+  root * /usr/share/caddy
+  file_server
+  @websockets {
+	    header Connection Upgrade
+	    header Upgrade websocket
+    }
+reverse_proxy @websockets localhost:{\$V2RAY_PORT}
+
 EOF
     echo "Writing docker-compose.yml"
     cat>docker-compose.yml<<EOF
@@ -479,7 +472,7 @@ services:
         max-file: "3"
 
   caddy:
-    image: mengyalei/v2ray_v3:caddy
+    image: caddy/caddy:builder-alpine
     restart: always
     environment:
       - ACME_AGREE=true
@@ -510,21 +503,13 @@ config_caddy_docker_cloudflare(){
     echo "Starting Writing Caddy file and docker-compose.yml"
     cat>Caddyfile<<EOF
 {\$V2RAY_DOMAIN}:{\$V2RAY_OUTSIDE_PORT}
-{
-  root /srv/www
-  log ./caddy.log
-  proxy {\$V2RAY_PATH} 127.0.0.1:{\$V2RAY_PORT} {
-    websocket
-    header_upstream -Origin
-  }
-  gzip
-  tls {\$V2RAY_EMAIL} {
-    protocols tls1.2 tls1.3
-    # remove comment if u want to use cloudflare (for DNS challenge authentication)
-    dns cloudflare
-  }
-  realip cloudflare
-}
+  root * /usr/share/caddy
+  file_server
+  @websockets {
+	    header Connection Upgrade
+	    header Upgrade websocket
+    }
+reverse_proxy @websockets localhost:{\$V2RAY_PORT}
 EOF
     echo "Writing docker-compose.yml"
     cat>docker-compose.yml<<EOF
@@ -566,7 +551,7 @@ services:
         max-file: "3"
 
   caddy:
-    image: mengyalei/v2ray_v3:caddy
+    image: caddy/caddy:builder-alpine
     restart: always
     environment:
       - ACME_AGREE=true
